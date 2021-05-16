@@ -42,10 +42,10 @@ const removeTasksByBoard = async (id) => {
 };
 
 const removeUserFromTasks = async (id) => {
-  // eslint-disable-next-line no-restricted-syntax
-  for (const task of TASKS) {
-    if (task.userId === id) task.userId = null;
-  }
+  TASKS.forEach((task) => {
+    const currentTask = task;
+    if (task.userId === id) currentTask.userId = null;
+  });
 };
 
 module.exports = {
