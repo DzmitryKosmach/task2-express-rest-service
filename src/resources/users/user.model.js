@@ -21,6 +21,11 @@ class User {
     this.password = password;
   }
 
+  /**
+   * Returns a user without field "password"
+   * @param {User} user - The user
+   * @returns {Object} user without field "password"
+   */
   static toResponse(user) {
     const { id, name, login } = user;
     return { id, name, login };
