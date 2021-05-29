@@ -2,14 +2,14 @@ const boardsRepo = require('./board.memory.repository');
 
 /**
  * Returns all boards
- * @returns {Array<Board>} Array of boards
+ * @returns {Promise<Array<Board>>} Array of boards
  */
 const getAll = () => boardsRepo.getAll();
 
 /**
  * Returns board by id
  * @param {string} id - Board id
- * @returns {Board} Board according to id
+ * @returns {Promise<Board>} Board according to id
  */
 const getById = (id) => boardsRepo.getBoard(id);
 
@@ -23,14 +23,14 @@ const update = (board) => boardsRepo.updateBoard(board);
 /**
  * Saves a board into the repository
  * @param {Board} board - board for saving
- * @returns {Board} the saved board
+ * @returns {Promise<Board>} the saved board
  */
 const save = (board) => boardsRepo.saveBoard(board);
 
 /**
  * Removes a board from the repository by id
  * @param {string} id - Board id
- * @returns {void}
+ * @returns {Promise<void>}
  */
 const remove = (id) => boardsRepo.removeBoard(id);
 
