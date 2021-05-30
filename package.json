@@ -4,7 +4,7 @@
   "repository": {
     "type": "git",
     "url": ""
-  },  
+  },
   "description": "REST service starter for RS School",
   "main": "build/server.js",
   "scripts": {
