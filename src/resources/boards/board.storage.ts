@@ -1,7 +1,7 @@
-const Board = require('./board.model');
-const Colunm = require('./column.model');
+import Board from './board.model';
+import Colunm from './column.model';
 
-const BOARDS = [
+const boardsStorage = {boards: [
   new Board({
     title: 'Board Title',
     columns: [
@@ -16,6 +16,6 @@ const BOARDS = [
       new Colunm({ title: 'Column Title4', order: 1 }),
     ],
   }),
-];
+]};
 
-module.exports = { BOARDS };
+export default boardsStorage;

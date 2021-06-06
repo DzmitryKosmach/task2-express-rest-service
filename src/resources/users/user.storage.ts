@@ -1,6 +1,6 @@
-const User = require('./user.model');
+import User from './user.model';
 
-const USERS = [
+const usersStorage = {users: [
   new User({
     name: 'Ivan',
     login: 'ivi',
@@ -11,6 +11,6 @@ const USERS = [
     login: 'ivi2',
     password: 'T35t_P@55w0rd',
   }),
-];
+]};
 
-module.exports = { USERS };
+export default usersStorage;
