@@ -1,7 +1,8 @@
-import express, { Application, Request, Response } from "express";
+import express, { Application, Request, Response, NextFunction } from "express";
 import swaggerUI from 'swagger-ui-express';
 import path from 'path';
 import YAML from 'yamljs';
+import {morganMiddleware, Logger} from './common/logger/morganMiddleware'
 import userRouter from './resources/users/user.router';
 import boardRouter from './resources/boards/board.router';
 import taskRouter from './resources/tasks/task.router';
@@ -11,6 +12,7 @@ const app: Application = express();
 const swaggerDocument = YAML.load(path.join(__dirname, '../doc/api.yaml'));
 
 app.use(express.json());
+app.use(morganMiddleware);
 
 app.use('/doc', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
@@ -26,9 +28,28 @@ app.use('/users', userRouter);
 app.use('/boards', boardRouter);
 app.use('/boards/:boardId/tasks', taskRouter);
 
-app.use((error: HttpException, _req:Request, res: Response) => {
-  res.status(error.status);
-  res.send(error.message);
+app.use((err: HttpException, req:Request, res: Response, next: NextFunction) => {
+  if(err.status) {
+    Logger.error(`${req.method} - ${err.status} - ${err.message}  - ${req.originalUrl}`);  
+    res.status(err.status);
+    res.send(err.message); 
+  } else {
+    Logger.error('Internal Server Error 500');
+    res.status(500).send('Internal Server Error');
+  }
+  next();
+});
+
+process.on('uncaughtException', (error) => {
+  Logger.error(`The uncaughtException error: ${error}`, () =>
+      process.exit(1)
+  );
+});
+
+process.on('unhandledRejection', (error) => {
+  Logger.error(`The unhandledRejection error: ${error}`, () =>
+      process.exit(1)
+  );
 });
 
 export default app;

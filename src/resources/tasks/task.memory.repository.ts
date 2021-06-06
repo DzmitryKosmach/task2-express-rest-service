@@ -13,7 +13,7 @@ const getTask = async (boardId: string, id: string): Promise<Task> => {
     (t) => t.id === id
   );
 
-  if (!task) throw createError(404);
+  if (!task) throw createError(404, `Not Found`);
 
   return task;
 };
