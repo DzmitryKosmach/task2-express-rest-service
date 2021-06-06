@@ -1,4 +1,5 @@
 import createError from 'http-errors';
+import {ReasonPhrases, StatusCodes} from 'http-status-codes';
 import Task from './task.model';
 
 import tasksStorage from './task.storage';
@@ -13,7 +14,7 @@ const getTask = async (boardId: string, id: string): Promise<Task> => {
     (t) => t.id === id
   );
 
-  if (!task) throw createError(404, `Not Found`);
+  if (!task) throw createError(StatusCodes.NOT_FOUND, ReasonPhrases.NOT_FOUND);
 
   return task;
 };
@@ -28,14 +29,14 @@ const saveTask = async (boardId: string, task: Task): Promise<Task> => {
 const updateTask = async (task: Task): Promise<Task> => {
   const taskIndex = tasks.findIndex((t) => t.id === task.id);
   if (taskIndex < 0) {
-    throw createError(400);
+    throw createError(StatusCodes.BAD_REQUEST, ReasonPhrases.BAD_REQUEST);;
   }
   tasks[taskIndex] = task;
   return task;
 };
 
 const removeTask = async (boardId: string, id: string): Promise<void> => {
-  if (!getTask(boardId, id)) throw createError(404);
+  if (!getTask(boardId, id)) throw createError(StatusCodes.NOT_FOUND, ReasonPhrases.NOT_FOUND);
   tasks = tasks.filter((t) => t.id !== id);
 };
 
