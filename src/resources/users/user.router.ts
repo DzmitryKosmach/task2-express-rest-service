@@ -1,13 +1,12 @@
-
 import {Request, Response, Router}  from 'express';
-
 import asyncHandler from 'express-async-handler';
-import User from './user.model';
+
+import User from '../../entities/user';
 import * as usersService from './user.service';
 import {convertToString} from '../../common/utils'
+import { UserDTO } from '../../common/types';
 
 const router = Router();
-
 
 router.route('/').get(
   asyncHandler(async (_req: Request, res: Response) => {
@@ -27,17 +26,17 @@ router.route('/:id').get(
 
 router.route('/').post(
   asyncHandler(async (req: Request, res: Response) => {
-    const user = await usersService.save(new User(req.body));
+    const user = await usersService.create(req.body);
     res.status(201).json(User.toResponse(user));
   })
 );
 
 router.route('/:id').put(
   asyncHandler(async (req: Request, res: Response) => {
-    const { id } = req.params;
-    const user = new User(req.body);
-    user.id = convertToString(id);
-    res.status(200).json(User.toResponse(await usersService.update(user)));
+    let { id } = req.params;
+    const userDTO: UserDTO = req.body;
+    id = convertToString(id);
+    res.status(200).json(User.toResponse(await usersService.update(id, userDTO)));
   })
 );
 

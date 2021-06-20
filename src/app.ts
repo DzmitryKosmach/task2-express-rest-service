@@ -36,20 +36,20 @@ app.use((err: HttpException, req:Request, res: Response, next: NextFunction) => 
     res.status(err.status);
     res.send(err.message); 
   } else {
-    Logger.error(ReasonPhrases.INTERNAL_SERVER_ERROR);
+    Logger.error(ReasonPhrases.INTERNAL_SERVER_ERROR, err, err.stack);
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(ReasonPhrases.INTERNAL_SERVER_ERROR);
   }
   next();
 });
 
 process.on('uncaughtException', (error) => {
-  Logger.error(`The uncaughtException ${error}`, () =>
+  Logger.error(`The uncaughtException. ${error}`, () =>
       process.exit(1)
   );
 });
 
 process.on('unhandledRejection', (error) => {
-  Logger.error(`The unhandledRejection ${error}`);
+  Logger.error(`The unhandledRejection. ${error}`);
 });
 
 export default app;
