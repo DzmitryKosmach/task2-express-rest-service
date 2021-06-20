@@ -1,3 +1,16 @@
+## Prerequisites
+
+    Download and install docker
+    Clone repository
+
+## How to start
+
+    Write in console in root folder:
+
+    docker-compose up
+
+
+
 # RS School REST service
 
 ## Prerequisites
