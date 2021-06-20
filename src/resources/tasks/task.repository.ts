@@ -35,11 +35,12 @@ const updateTask = async (boardId: string, id: string, dto: TaskDTO):Promise<Tas
   const task = await taskRepository.findOne(id);
   if(!task) throw createError(StatusCodes.NOT_FOUND, ReasonPhrases.NOT_FOUND);
   const preUpdateDTO = dto;
-  preUpdateDTO.boardId = boardId;
+  // preUpdateDTO.boardId = boardId;
   const preUpdateTask = taskRepository.create(preUpdateDTO);
-
-  preUpdateTask.id = id;  
-  const updatedTask = await taskRepository.save(preUpdateTask);  
+  // preUpdateTask.id = id;  
+  
+  
+  const updatedTask = await taskRepository.save(preUpdateTask);   
   return updatedTask;
 };
 
@@ -51,25 +52,9 @@ const deleteTask = async (boardId: string, id: string): Promise<'DELETED'> => {
   return 'DELETED';
 }
 
-/**
-const removeTask = async (boardId: string, id: string): Promise<void> => {
-  if (!getTask(boardId, id)) throw createError(StatusCodes.NOT_FOUND, ReasonPhrases.NOT_FOUND);
-  tasks = tasks.filter((t) => t.id !== id);
-};
-
-const saveTask = async (boardId: string, task: Task): Promise<Task> => {
-  const newTask = task;
-  newTask.boardId = boardId;
-  tasks.push(newTask);
-  return task;
-};
- */
-
-
 const removeTasksByBoard = async (id: string): Promise<void> => {
   const taskRepository = getRepository(Task);
   await taskRepository.delete({boardId: id})
-  // tasks = tasks.filter((t) => t.boardId !== id);
 };
 
 const removeUserFromTasks = async (id: string): Promise<void> => {
@@ -80,14 +65,7 @@ const removeUserFromTasks = async (id: string): Promise<void> => {
     taskNullUser.userId = null;
     const taskNullUserDTO = taskNullUser as TaskDTO
     taskRepository.update(taskNullUser.id, taskNullUserDTO);
-  });
-  
-  /**
-  tasks.forEach((task) => {
-    const currentTask = task;
-    if (task.userId === id) currentTask.userId = null;
-  });
-   */
+  });    
 };
 
 export {

@@ -3,7 +3,6 @@ import createError from 'http-errors';
 import {ReasonPhrases, StatusCodes} from 'http-status-codes';
 import User from '../../entities/user';
 
-// import { removeUserFromTasks } from '../tasks/task.memory.repository';
 import { UserDTO } from '../../common/types';
 import { removeUserFromTasks } from '../tasks/task.repository';
 
@@ -31,7 +30,6 @@ const updateUser = async (id: string, dto: UserDTO):Promise<User> => {
   const user = await userRepository.findOne(id);
   if(!user) throw createError(StatusCodes.NOT_FOUND, ReasonPhrases.NOT_FOUND);
   await userRepository.update(id, dto);
-  // return updatedUserRaw.raw;
   return getUserById(id); 
 };
 
