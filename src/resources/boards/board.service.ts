@@ -1,14 +1,15 @@
-import * as boardsRepo from'./board.memory.repository';
-import Board from './board.model';
+import * as boardsRepo from'./board.repository';
+import Board from '../../entities/board';
+import { BoardDTO } from '../../common/types';
 
 const getAll = (): Promise<Array<Board>> => boardsRepo.getAll();
 
-const getById = (id: string): Promise<Board> => boardsRepo.getBoard(id);
+const getById = (id: string): Promise<Board> => boardsRepo.getBoardById(id);
 
-const update = (board: Board): Promise<Board> => boardsRepo.updateBoard(board);
+const update = (id: string, dto: BoardDTO): Promise<Board> => boardsRepo.updateBoard(id, dto);
 
-const save = (board: Board): Promise<Board> => boardsRepo.saveBoard(board);
+const create = (dto: BoardDTO): Promise<Board> => boardsRepo.createBoard(dto);
 
-const remove = (id: string): Promise<void> => boardsRepo.removeBoard(id);
+const remove = (id: string): Promise<'DELETED'> => boardsRepo.deleteBoard(id);
 
-export { getAll, getById, save, update, remove };
+export { getAll, getById, create, update, remove };

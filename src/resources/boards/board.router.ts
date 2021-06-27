@@ -1,9 +1,9 @@
 import {Request, Response, Router}  from 'express';
 import asyncHandler from 'express-async-handler';
 
-import Board from './board.model';
 import * as boardsService from './board.service';
 import {convertToString} from '../../common/utils'
+import { BoardDTO } from '../../common/types';
 
 const router = Router();
 
@@ -24,17 +24,17 @@ router.route('/:id').get(
 
 router.route('/').post(
   asyncHandler(async (req, res) => {
-    const board = await boardsService.save(new Board(req.body));
+    const board = await boardsService.create(req.body);
     res.status(201).json(board);
   })
 );
 
 router.route('/:id').put(
-  asyncHandler(async (req, res) => {
-    const board = new Board(req.body);
-    const { id } = req.params;
-    board.id = convertToString(id);
-    res.status(200).json(await boardsService.update(board));
+  asyncHandler(async (req, res) => {    
+    let { id } = req.params;
+    const boardDTO: BoardDTO = req.body;
+    id = convertToString(id);
+    res.status(200).json(await boardsService.update(id, boardDTO));
   })
 );
 

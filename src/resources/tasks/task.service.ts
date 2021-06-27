@@ -1,14 +1,15 @@
-import * as taskRepo from './task.memory.repository';
-import Task from './task.model';
+import * as taskRepo from './task.repository';
+import Task from '../../entities/task';
+import { TaskDTO } from '../../common/types';
 
-const getAll = (boardId: string): Promise<Array<Task>> => taskRepo.getAll(boardId);
+const getAll = (boardId: string): Promise<Task[]> => taskRepo.getAll(boardId);
 
 const getById = (boardId: string, id: string): Promise<Task> => taskRepo.getTask(boardId, id);
 
-const update = (task: Task): Promise<Task> => taskRepo.updateTask(task);
+const update = (boardId: string, id: string, dto: TaskDTO): Promise<Task> => taskRepo.updateTask(boardId, id, dto);
 
-const save = (boardId: string, task: Task): Promise<Task> => taskRepo.saveTask(boardId, task);
+const create = (boardId: string, dto: TaskDTO): Promise<Task> => taskRepo.createTask(boardId, dto);
 
-const remove = (boardId: string, id: string): Promise<void> => taskRepo.removeTask(boardId, id);
+const remove = (boardId: string, id: string): Promise<'DELETED'> => taskRepo.deleteTask(boardId, id);
 
-export { getAll, getById, save, update, remove };
+export { getAll, getById, create, update, remove };

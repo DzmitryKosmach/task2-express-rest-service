@@ -1,8 +1,6 @@
 import {Request, Response, Router}  from 'express';
 import asyncHandler from 'express-async-handler';
-import createError from 'http-errors';
 import {StatusCodes} from 'http-status-codes';
-import Task from'./task.model';
 import * as tasksService from './task.service';
 import {convertToString} from '../../common/utils'
 
@@ -27,21 +25,24 @@ router.route('/:id').get(
 router.route('/').post(
   asyncHandler(async (req: Request, res: Response) => {
     const { boardId } = req.params;
-    const newTask = new Task(req.body);
-    const task = await tasksService.save(convertToString(boardId), newTask);
+    // const newTask = new Task(req.body);
+    const task = await tasksService.create(convertToString(boardId), req.body);
     res.status(StatusCodes.CREATED).json(task);
   })
 );
 
 router.route('/:id').put(
   asyncHandler(async (req: Request, res: Response) => {
-    const newTask = new Task(req.body);
     const { boardId, id } = req.params;
+    const boardIdString = convertToString(boardId);
     const idString = convertToString(id);
-    const task = await tasksService.getById(convertToString(boardId), idString);
-    if (!task || newTask.boardId !== boardId) createError(StatusCodes.UNAUTHORIZED);
-    newTask.id = idString;
-    res.status(StatusCodes.OK).json(tasksService.update(newTask));
+
+    const updatedTask = await tasksService.update(boardIdString, idString, req.body)
+
+    console.log('-----------------------');
+    console.log(`task = ${JSON.stringify(updatedTask)}`);
+    console.log('-----------------------');
+    res.status(StatusCodes.OK).json(updatedTask);
   })
 );
 
