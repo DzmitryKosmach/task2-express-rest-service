@@ -1,12 +1,13 @@
-import {Entity, Column, PrimaryGeneratedColumn, ManyToOne} from 'typeorm'
+import {Entity, Column, ManyToOne, PrimaryColumn} from 'typeorm'
+import { v4 as uuid } from 'uuid'
+
 import Board from './board';
 
 @Entity({name: 'column_board'})
 class ColunmBoard {
 
-  
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+  @PrimaryColumn()
+  id: string = uuid();
 
   @Column('varchar', {length: 60})
   title = 'Title';

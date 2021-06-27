@@ -3,6 +3,7 @@ import asyncHandler from 'express-async-handler';
 import {StatusCodes} from 'http-status-codes';
 import * as tasksService from './task.service';
 import {convertToString} from '../../common/utils'
+import { TaskDTO } from '../../common/types';
 
 const router = Router({ mergeParams: true });
 
@@ -36,12 +37,16 @@ router.route('/:id').put(
     const { boardId, id } = req.params;
     const boardIdString = convertToString(boardId);
     const idString = convertToString(id);
+    const taskDTO: TaskDTO = req.body;
 
-    const updatedTask = await tasksService.update(boardIdString, idString, req.body)
+    const updatedTask = await tasksService.update(boardIdString, idString, taskDTO)
 
+    /**
     console.log('-----------------------');
     console.log(`task = ${JSON.stringify(updatedTask)}`);
     console.log('-----------------------');
+    */
+
     res.status(StatusCodes.OK).json(updatedTask);
   })
 );

@@ -1,11 +1,12 @@
-import {Entity, Column, PrimaryGeneratedColumn} from 'typeorm'
+import {Entity, Column, PrimaryColumn} from 'typeorm'
+import { v4 as uuid } from 'uuid'
+
 
 @Entity({name: 'user_game'})
 class User {
-
   
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+  @PrimaryColumn()
+  id: string = uuid();
 
   @Column('varchar', {length: 30})
   name  = 'USER';
@@ -13,7 +14,7 @@ class User {
   @Column('varchar', {length: 30})  
   login = 'user';
 
-  @Column('varchar', {length: 30})
+  @Column('varchar')
   password = 'P@55w0rd';
  
   static toResponse(user: User): {id: string, name: string, login: string} {
