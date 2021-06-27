@@ -38,15 +38,7 @@ router.route('/:id').put(
     const boardIdString = convertToString(boardId);
     const idString = convertToString(id);
     const taskDTO: TaskDTO = req.body;
-
     const updatedTask = await tasksService.update(boardIdString, idString, taskDTO)
-
-    /**
-    console.log('-----------------------');
-    console.log(`task = ${JSON.stringify(updatedTask)}`);
-    console.log('-----------------------');
-    */
-
     res.status(StatusCodes.OK).json(updatedTask);
   })
 );

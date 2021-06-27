@@ -16,9 +16,7 @@ class Task {
 
   @Column('varchar', {length: 30})
   description: string;
-
-  // @Column('varchar', {nullable: true})
-  // userId: string | null;
+  
   @ManyToOne(() => User, (user: User) => user.id, { onDelete: 'SET NULL', nullable: true, eager: true })
   userId?: string
 

@@ -12,8 +12,6 @@ import taskRouter from './resources/tasks/task.router';
 import HttpException from './exceptions/httpexception';
 import { authMiddleware } from './common/auth/checkToken';
 
-
-
 const app: Application = express();
 const swaggerDocument = YAML.load(path.join(__dirname, '../doc/api.yaml'));
 
