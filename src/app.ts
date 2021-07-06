@@ -5,10 +5,12 @@ import YAML from 'yamljs';
 import {ReasonPhrases, StatusCodes} from 'http-status-codes';
 
 import {morganMiddleware, Logger} from './common/logger/morganMiddleware'
+import loginRouter from './resources/login/login.router';
 import userRouter from './resources/users/user.router';
 import boardRouter from './resources/boards/board.router';
 import taskRouter from './resources/tasks/task.router';
 import HttpException from './exceptions/httpexception';
+import { authMiddleware } from './common/auth/checkToken';
 
 const app: Application = express();
 const swaggerDocument = YAML.load(path.join(__dirname, '../doc/api.yaml'));
@@ -26,9 +28,12 @@ app.use('/', (req: Request, res: Response, next) => {
   next();
 });
 
-app.use('/users', userRouter);
-app.use('/boards', boardRouter);
-app.use('/boards/:boardId/tasks', taskRouter);
+app.use('/login', loginRouter);
+
+// app.use(authMiddleware);
+app.use('/users', authMiddleware, userRouter);
+app.use('/boards', authMiddleware, boardRouter);
+app.use('/boards/:boardId/tasks', authMiddleware, taskRouter);
 
 app.use((err: HttpException, req:Request, res: Response, next: NextFunction) => {
   if(err.status) {

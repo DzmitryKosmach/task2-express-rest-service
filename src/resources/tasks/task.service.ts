@@ -4,7 +4,7 @@ import { TaskDTO } from '../../common/types';
 
 const getAll = (boardId: string): Promise<Task[]> => taskRepo.getAll(boardId);
 
-const getById = (boardId: string, id: string): Promise<Task> => taskRepo.getTask(boardId, id);
+const getById = (boardId: string, ID: string): Promise<Task> => taskRepo.getTask(boardId, ID);
 
 const update = (boardId: string, id: string, dto: TaskDTO): Promise<Task> => taskRepo.updateTask(boardId, id, dto);
 

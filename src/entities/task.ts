@@ -1,10 +1,12 @@
-import {Entity, Column, PrimaryGeneratedColumn} from 'typeorm'
+import {Entity, Column, PrimaryColumn, ManyToOne} from 'typeorm'
+import { v4 as uuid } from 'uuid'
+import User from './user';
 
 @Entity({name: 'task'})
 class Task {
 
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+  @PrimaryColumn()
+  id: string = uuid();
 
   @Column('varchar', {length: 60})
   title = 'Title';
@@ -14,15 +16,16 @@ class Task {
 
   @Column('varchar', {length: 30})
   description: string;
+  
+  @ManyToOne(() => User, (user: User) => user.id, { onDelete: 'SET NULL', nullable: true, eager: true })
+  userId?: string
 
-  @Column('uuid', {nullable: true})
-  userId: string | null;
-
-  @Column('uuid', {nullable: true})
+  @Column('varchar', {nullable: true})
   boardId: string;
 
-  @Column('uuid', {nullable: true})
+  @Column('varchar',{nullable: true})
   columnId: string;
+  
 }
 
 export default Task;
