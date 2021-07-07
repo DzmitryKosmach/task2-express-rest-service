@@ -11,13 +11,13 @@ export class LoggerMiddleware implements NestMiddleware {
   ) {}
 
   use(req: Request, res: Response, next: NextFunction) {
-    const message = `url: ${req.baseUrl}; queryParams: ${JSON.stringify(
-      req.query,
-    )}; pathParams: ${JSON.stringify(req.params)}; body: ${JSON.stringify(
-      req.body,
-    )}; statusCode: ${res.statusCode}`;
-
     res.on('finish', () => {
+      const message = `url: ${req.baseUrl}; queryParams: ${JSON.stringify(
+        req.query,
+      )}; pathParams: ${JSON.stringify(req.params)}; body: ${JSON.stringify(
+        req.body,
+      )}; statusCode: ${res.statusCode}`;
+
       this.logger.info(`Level: INFO: ${message}`);
       if (res.statusCode > 399) {
         this.logger.error(`Level: ERROR: ${message}`);
