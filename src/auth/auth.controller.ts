@@ -7,7 +7,7 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post()
-  // @UseGuards(LocalAuthGuard)
+  //@UseGuards(LocalAuthGuard)
   //@HttpCode(HttpStatus.OK)
   login(@Body() userLoginDto: UserLoginDto) {
     //const result = this.authService.validateUser(

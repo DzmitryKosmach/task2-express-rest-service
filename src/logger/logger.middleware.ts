@@ -12,7 +12,7 @@ export class LoggerMiddleware implements NestMiddleware {
 
   use(req: Request, res: Response, next: NextFunction) {
     res.on('finish', () => {
-      const message = `url: ${req.baseUrl}; queryParams: ${JSON.stringify(
+      const message = `url: ${req.url}; queryParams: ${JSON.stringify(
         req.query,
       )}; pathParams: ${JSON.stringify(req.params)}; body: ${JSON.stringify(
         req.body,

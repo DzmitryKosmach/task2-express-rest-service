@@ -11,6 +11,8 @@ import { DatabaseModule } from './database/database.module';
 import { WinstonModule } from 'nest-winston';
 import * as winston from 'winston';
 import { LoggerMiddleware } from './logger/logger.middleware';
+import { LoggingInterceptor } from './logger/logger.interceptor';
+import { APP_INTERCEPTOR } from '@nestjs/core';
 
 @Module({
   imports: [
@@ -32,7 +34,10 @@ import { LoggerMiddleware } from './logger/logger.middleware';
     }),
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    { provide: APP_INTERCEPTOR, useClass: LoggingInterceptor },
+  ],
 })
 
 // export class AppModule {}
