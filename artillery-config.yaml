@@ -1,0 +1,16 @@
+config:
+  target: http://localhost:4000
+  phases:
+    - duration: 10
+      arrivalRate: 10
+  defaults:
+    headers:
+      Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbiI6ImFkbWluIiwiaWQiOiJhZG1pbiIsImlhdCI6MTYyNjAzMjk1OSwiZXhwIjoxNjI2MDMzNTU5fQ.Qm_E0xlj2x1opyLQpaX1Upj61Q2mSwO7MS_MSa_WjvI'
+      Content-Type: 'application/json'
+scenarios:
+  - flow:
+      - get:
+          url: /users
+      - post:
+          url: /users
+          body: '{"login":"test@test.com", "password": "some_testpassword"}'
