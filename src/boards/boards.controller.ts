@@ -38,14 +38,6 @@ export class BoardsController {
 
   @Put(':id')
   update(@Param('id') id: string, @Body() updateBoardDto: UpdateBoardDto) {
-    /** const boardRepository = getRepository(Board);  
-  const board = await getBoardById(id);
-  if(!board) throw createError(StatusCodes.NOT_FOUND, ReasonPhrases.NOT_FOUND);
-  const preUpdateBoard = boardRepository.create(dto);
-  preUpdateBoard.id = id;
-  const updatedBoard = await boardRepository.save(preUpdateBoard);  
-  return updatedBoard;
-  */
     return this.boardsService.update(id, updateBoardDto);
   }
 
@@ -54,7 +46,5 @@ export class BoardsController {
     const affected = await this.boardsService.remove(id);
     if (affected === undefined) throw new NotFoundException();
     return affected;
-
-    //return this.boardsService.remove(id);
   }
 }

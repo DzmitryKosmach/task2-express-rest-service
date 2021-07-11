@@ -47,7 +47,6 @@ export class DatabaseBoardsStorage implements BoardsStore {
       .where('boardId = :id', { id })
       .execute();
 
-    //const deletionRes = await this.repo.delete(id);
     const deletionRes = await this.repo
       .createQueryBuilder()
       .delete()
@@ -56,6 +55,5 @@ export class DatabaseBoardsStorage implements BoardsStore {
       .execute();
     if (deletionRes.affected !== 0) return 'DELETED';
     return undefined;
-    //if (deletionRes.affected) return 'DELETED';
   };
 }

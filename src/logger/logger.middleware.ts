@@ -2,7 +2,6 @@ import { Inject, Injectable, NestMiddleware } from '@nestjs/common';
 import { Request, Response, NextFunction } from 'express';
 import { Logger } from 'winston';
 
-// Проверить implements LoggerService и  extends Logger from '@nestjs/common'
 @Injectable()
 export class LoggerMiddleware implements NestMiddleware {
   constructor(

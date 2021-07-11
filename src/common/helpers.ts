@@ -1,7 +1,5 @@
 import * as bcrypt from 'bcrypt';
 
-// require('dotenv').config();
-
 const getHashPassword = async (password: string): Promise<string> => {
   const salt = await bcrypt.genSalt(Number(process.env.DEFAULT_SALT_ROUNDS));
   const hash = await bcrypt.hash(password, salt);

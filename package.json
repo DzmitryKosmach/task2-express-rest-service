@@ -20,7 +20,9 @@
     "lint": "eslint --ext .js,.ts --fix src/",
     "test": "cross-env DEBUG=rs:* jest --testMatch \"<rootDir>/test/e2e/test/*.test.js\" --noStackTrace --runInBand",
     "test:auth": "cross-env DEBUG=rs:* TEST_MODE=auth jest --noStackTrace",
-    "docs": "node ./node_modules/jsdoc/jsdoc.js -c ./.jsdoc.conf.json"
+    "docs": "node ./node_modules/jsdoc/jsdoc.js -c ./.jsdoc.conf.json",
+    "artillery:quick": "artillery quick -d 10 -r 10 -n 20 http://localhost/users/",
+    "artillery":"artillery run --output report.json artillery-config.yaml"
   },
   "dependencies": {
     "@nestjs/common": "^7.6.15",
@@ -69,6 +71,7 @@
     "@types/uuid": "^8.3.0",
     "@typescript-eslint/eslint-plugin": "^4.19.0",
     "@typescript-eslint/parser": "^4.19.0",
+    "artillery": "^1.7.6",
     "chai": "4.3.4",
     "dirty-chai": "2.0.1",
     "eslint": "^7.22.0",

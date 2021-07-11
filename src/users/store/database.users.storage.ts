@@ -36,7 +36,6 @@ export class DatabaseUsersStorage implements UsersStore {
     const hashedPasword = await getHashPassword(password);
     const preCreateDto = dto;
     preCreateDto.password = hashedPasword;
-    //const userRepository = getRepository(User);
     const newUser = this.repo.create(preCreateDto);
     const savedUser = this.repo.save(newUser);
     return savedUser;
